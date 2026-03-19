@@ -1,0 +1,14 @@
+{
+  "name": "adb-test",
+  "displayName": "ADB Test",
+  "description": "Test Android apps on real devices and emulators via ADB — UI inspection, tapping, swiping, typing, screenshots, and app lifecycle management",
+  "version": "1.0.0",
+  "author": {
+    "name": "Tim Malseed"
+  },
+  "repository": "https://github.com/timusus/claude-adb-test",
+  "license": "MIT",
+  "keywords": ["android", "adb", "testing", "device", "emulator", "ui-automation"],
+  "skills": "./skills/",
+  "commands": "./commands/"
+}

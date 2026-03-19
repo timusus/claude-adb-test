@@ -7,49 +7,45 @@ allowed-tools: ["Bash(adb:*)", "Bash(~/.claude/scripts/adb/*:*)"]
 
 Test Android applications using ADB on connected devices/emulators.
 
-## Critical Rule
-
 **NEVER estimate coordinates from screenshots.** Always use `ui-dump.sh` to find exact element bounds.
+
+All helper scripts are at `~/.claude/scripts/adb/` (abbreviated as `adb/` below).
 
 ## Core Workflow
 
-```bash
-~/.claude/scripts/adb/ui-dump.sh          # 1. See what's on screen
-~/.claude/scripts/adb/tap.sh 200 550      # 2. Tap using center coords from dump
-sleep 0.5
-~/.claude/scripts/adb/ui-dump.sh          # 3. Verify state change
+```
+1. DUMP    → adb/ui-dump.sh           (get element coordinates)
+2. ACT     → adb/tap.sh X Y           (use center coords from dump)
+3. WAIT    → sleep 0.5                 (let animations settle)
+4. VERIFY  → adb/ui-dump.sh           (confirm state change)
 ```
 
-## Helper Scripts
+## Scripts Quick Reference
 
-All at `~/.claude/scripts/adb/`:
-
-| Script | Usage |
-|--------|-------|
-| `ui-dump.sh [--raw]` | UI hierarchy — formatted elements with center coords, retry on null root |
+| Script | Purpose |
+|--------|---------|
+| `ui-dump.sh [--raw]` | UI hierarchy with center coords, retry on null root |
 | `screenshot.sh [name]` | Screenshot (max 1000px, WebP) |
-| `tap.sh <x> <y>` | Tap coordinates |
-| `tap-by-id.sh <id>` | Tap by resource-id |
-| `tap-by-text.sh <text>` | Tap by visible text |
-| `long-press.sh <x> <y> [ms]` | Long press (default 1000ms) |
-| `swipe.sh <direction\|coords>` | Swipe up/down/left/right or explicit coords |
-| `type-text.sh [--clear] <text>` | Type text (--clear erases first) |
-| `key.sh <name\|code>` | Key event: back, home, enter, menu, etc. |
-| `find-element.sh <query>` | Element properties and tap coords |
-| `wait-for-element.sh <query> [timeout]` | Wait for element (default 10s) |
-| `scroll-to-find.sh <query> [scrolls] [dir]` | Scroll to find element |
-| `install-apk.sh <path> [--grant-permissions]` | Install APK (-r -t, optional -g) |
+| `tap.sh X Y` | Tap coordinates |
+| `tap-by-id.sh ID` | Tap by resource-id |
+| `tap-by-text.sh TEXT` | Tap by visible text |
+| `long-press.sh X Y [ms]` | Long press (default 1000ms) |
+| `swipe.sh DIRECTION` | Swipe up/down/left/right |
+| `type-text.sh [--clear] TEXT` | Type text (--clear erases first) |
+| `key.sh NAME` | Key event: back, home, enter, menu, etc. |
+| `find-element.sh QUERY` | Element properties and tap coords |
+| `wait-for-element.sh QUERY [timeout]` | Wait for element (default 10s) |
+| `scroll-to-find.sh QUERY [scrolls] [dir]` | Scroll to find element |
+| `install-apk.sh PATH [--grant-permissions]` | Install APK |
 | `logcat.sh [package] [--errors] [--lines N]` | View logs (default 50 lines) |
 
-Full reference: `~/.claude/skills/android-device/SKILL.md`
+## Go Deeper
 
-## Sub-commands
-
-| Command | Content |
-|---------|---------|
-| `/adb-test:input` | Touch, text input, key events, gestures |
-| `/adb-test:lifecycle` | App launch, stop, install, permissions |
-| `/adb-test:recipes` | Common testing patterns and workflows |
-| `/adb-test:troubleshoot` | Error handling and debugging |
-| `/adb-test:compose` | Jetpack Compose testing specifics |
-| `/adb-test:advanced` | Broadcasts, emulator control, performance |
+| Command | When to use |
+|---------|-------------|
+| `/adb-test:input` | Need detailed input reference — touch, text, gestures, key events |
+| `/adb-test:lifecycle` | Installing, launching, stopping apps, managing permissions |
+| `/adb-test:recipes` | Common testing patterns — search, scroll, toggle, verify |
+| `/adb-test:compose` | Testing Jetpack Compose apps (testTag, semantics, LazyColumn) |
+| `/adb-test:troubleshoot` | Something isn't working — null root, tap misses, text garbled |
+| `/adb-test:advanced` | Broadcasts, emulator control, performance profiling, file ops |

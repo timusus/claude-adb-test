@@ -1,6 +1,6 @@
 ---
 description: "ADB advanced: broadcasts, emulator, performance"
-allowed-tools: ["Bash(adb:*)"]
+allowed-tools: ["Bash(adb:*)", "Bash(~/.claude/scripts/adb/*:*)"]
 ---
 
 # ADB Advanced

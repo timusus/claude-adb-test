@@ -9,7 +9,7 @@ allowed-tools: ["Bash(adb:*)", "Bash(~/.claude/scripts/adb/*:*)"]
 
 ### "null root node"
 
-`ui-dump.sh` retries automatically (5 attempts, 500ms between). If still failing:
+`ui-dump.sh` retries automatically (10 attempts, 500ms between). If still failing:
 1. Wait for animations: `sleep 1` before dump
 2. Dismiss system dialogs (permissions, updates)
 3. App may be loading — wait longer
